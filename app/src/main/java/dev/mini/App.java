@@ -9,6 +9,18 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        String[] samples = {
+                "CREATE TABLE users (id INT, name TEXT);",
+                "SELECT id, name FROM users WHERE id = 10;",
+                "INSERT INTO users(id,name) VALUES(1,'Alice');",
+                "UPDATE users SET name='Bob' WHERE id=1;",
+                "DELETE FROM users WHERE id=1;"
+        };
+        for (String sql : samples) {
+            dev.mini.sql.Lexer lexer = new dev.mini.sql.Lexer(sql);
+            dev.mini.sql.Parser parser = new dev.mini.sql.Parser(lexer.scanTokens());
+            dev.mini.sql.SqlStatement stmt = parser.parse();
+            System.out.println(stmt);
+        }
     }
 }
